@@ -1,18 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:flutter_app_first/models/movie.dart';
 import 'package:http/http.dart' as http;
 
-class Movie {
-  final String title;
-  final double rating;
-  final String posterArtUrl;
-  
-  Movie.fromJson (Map jsonMap)
-    : title = jsonMap['title'],
-      rating = jsonMap['vote_average'].toDouble(),
-      posterArtUrl = jsonMap['backdrop_path'];
-}
+
+
 
 //get the data from TMDB as a Future stream
 Future<Stream<Movie>> getMovies() async {
@@ -23,8 +15,8 @@ Future<Stream<Movie>> getMovies() async {
   var streamedRes = await client.send(new http.Request('get', Uri.parse(url)));
 
   return streamedRes.stream
-          .transform(UTF8.decoder)
-          .transform(JSON.decoder)
-          .expand((jsonBody) => (jsonBody as Map)['results'])
-          .map((jsonMovie) => new Movie.fromJson(jsonMovie));
+      .transform(UTF8.decoder)
+      .transform(JSON.decoder)
+      .expand((jsonBody) => (jsonBody as Map)['results'])
+      .map((jsonMovie) => new Movie.fromJson(jsonMovie));
 }
