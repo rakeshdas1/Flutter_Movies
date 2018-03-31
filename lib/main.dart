@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       theme: new ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.red,
         primaryColor: Colors.deepOrange
       ),
-      home: new MoviesPage(),
+      home: new MoviesListPage(),
     );
   }
 }

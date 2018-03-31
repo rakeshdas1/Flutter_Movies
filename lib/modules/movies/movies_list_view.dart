@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 
-class MoviesPage extends StatelessWidget {
+class MoviesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

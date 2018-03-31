@@ -18,7 +18,7 @@ class MovieListPresenter {
   void loadMovies() {
     assert(_view != null);
 
-    _repo.fetch()
+    _repo.fetchTopRated()
         .then((movies) => _view.onLoadMoviesComplete(movies))
         .catchError((onError) {
       print(onError);
