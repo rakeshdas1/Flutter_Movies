@@ -4,7 +4,7 @@ class Movie {
   final String title;
   final double rating;
   final String posterArtUrl;
-  final String id;
+  final int id;
 
 
   const Movie({this.title, this.rating, this.posterArtUrl, this.id});
@@ -18,7 +18,7 @@ class Movie {
 
 abstract class MovieRepo {
   Future<List<Movie>> fetchTopRated();
-  Future<List<Movie>> fetchMovieDetails();
+  Future<Movie> fetchMovieDetails(int movieId);
 }
 
 class FetchDataException implements Exception {

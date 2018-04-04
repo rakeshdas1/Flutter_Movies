@@ -80,7 +80,7 @@ class _MovieListState extends State<MovieList> implements MovieListViewContract 
 
   List<_MovieListItem> _buildMovieList() {
     return _movies.map((movie) => new _MovieListItem(movie, (){
-      Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(movie.title)));
+      Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(movie.title + " | " + movie.id.toString())));
     })).toList();
   }
 }

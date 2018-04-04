@@ -28,7 +28,8 @@ class MovieDataFetcher implements MovieRepo {
   }
 
   @override
-  Future<List<Movie>> fetchMovieDetails() {
+  Future<Movie> fetchMovieDetails(int movieId) {
+    //make call to api to get move details
   }
 
 
