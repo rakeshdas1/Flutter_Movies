@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/models/movie.dart';
-import 'package:flutter_app_first/modules/movies/movies_presenter.dart';
+import 'package:flutter_app_first/modules/movie_list/movies_presenter.dart';
 import 'package:meta/meta.dart';
 import 'package:transparent_image/transparent_image.dart';
 

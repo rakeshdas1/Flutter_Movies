@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/injection/dependency_injection.dart';
 import 'package:flutter_app_first/models/movie.dart' as movies;
-import 'package:flutter_app_first/modules/movies/movies_list_view.dart';
+import 'package:flutter_app_first/modules/movie_list/movies_list_view.dart';
 import 'package:flutter_app_first/network/getData.dart';
 import 'package:flutter_app_first/widgets/movieCell.dart';
 import 'package:flutter_app_first/widgets/photoTile.dart';
@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.deepOrange
       ),
       home: new MoviesListPage(),
+      routes: <String, WidgetBuilder> {
+        '/home' : (BuildContext context) => new MoviesListPage(),
+      },
     );
   }
 }
