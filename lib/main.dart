@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       ),
       home: new MoviesListPage(),
       routes: <String, WidgetBuilder> {
-        '/home' : (BuildContext context) => new MoviesListPage(),
+        '/movieDetail' : (BuildContext context) => new MoviesListPage(),
       },
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 class MovieDetail {
   final String title;
   final double rating;
@@ -18,6 +20,9 @@ class MovieDetail {
         overview = jsonMap['overview'],
         tagline = jsonMap['tagline'],
         id = jsonMap['id'];
+}
+abstract class MovieDetailRepo {
+  Future<MovieDetail> fetchMovieDetails();
 }
 
 class FetchDataException implements Exception {
