@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/models/movie.dart';
+import 'package:flutter_app_first/modules/movie_detail/movie_detail.dart';
 import 'package:flutter_app_first/modules/movie_list/movies_presenter.dart';
 import 'package:meta/meta.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -80,8 +81,17 @@ class _MovieListState extends State<MovieList> implements MovieListViewContract 
 
   List<_MovieListItem> _buildMovieList() {
     return _movies.map((movie) => new _MovieListItem(movie, (){
-      Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(movie.title + " | " + movie.id.toString())));
+//      Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(movie.title + " | " + movie.id.toString())));
+        _showMovieDetailsView(context, movie);
     })).toList();
+
+  }
+
+  void _showMovieDetailsView(BuildContext context, Movie movie) {
+    Navigator.push(context, new MaterialPageRoute<Null>(
+        settings: const RouteSettings(name: '/movieDetails'),
+        builder: (BuildContext context) => new MovieDetailPage(movie)
+    ));
   }
 }
 
@@ -101,7 +111,7 @@ class _MovieListItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new Hero(
-                tag: "image",
+                tag: _movie.id,
                 child: new FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: _movie.posterArtUrl, fit: BoxFit.contain,)),
             new Text(_movie.title, style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0),)
           ],
@@ -110,13 +120,4 @@ class _MovieListItem extends StatelessWidget {
     );
   }
 }
-class _MovieListItem2 extends ListTile {
-  _MovieListItem2({ @required Movie movie}) :
-      super (
-        title: new Text(movie.title),
-        subtitle: new Text(movie.rating.toString()),
-        leading: new CircleAvatar(
-          child: new Text(movie.title[0]),
-        )
-      );
-}
+

@@ -1,6 +1,9 @@
 import 'package:flutter_app_first/data/movie_data_fetcher.dart';
 import 'package:flutter_app_first/data/movie_data_mock.dart';
+import 'package:flutter_app_first/data/movie_detail/movie_details_fetcher.dart';
 import 'package:flutter_app_first/models/movie.dart';
+
+import '../models/movieDetail.dart';
 
 
 enum Flavor {
@@ -28,4 +31,10 @@ class Injector {
       default: return new MovieDataFetcher();
     }
   }
+  MovieDetailsRepo get movieDetailRepo {
+    switch(_flavor) {
+      default: return new MovieDetailsFetcher();
+    }
+  }
+
 }

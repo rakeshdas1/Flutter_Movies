@@ -21,8 +21,8 @@ class MovieDetail {
         tagline = jsonMap['tagline'],
         id = jsonMap['id'];
 }
-abstract class MovieDetailRepo {
-  Future<MovieDetail> fetchMovieDetails();
+abstract class MovieDetailsRepo {
+  Future<MovieDetail> fetchMovieDetails(int movieId);
 }
 
 class FetchDataException implements Exception {

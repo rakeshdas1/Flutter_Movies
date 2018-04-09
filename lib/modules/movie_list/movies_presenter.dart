@@ -21,8 +21,8 @@ class MovieListPresenter {
     _repo.fetchTopRated()
         .then((movies) => _view.onLoadMoviesComplete(movies))
         .catchError((onError) {
-      print(onError);
-      _view.onLoadMoviesError();
+          print(onError);
+          _view.onLoadMoviesError();
     });
   }
 }
