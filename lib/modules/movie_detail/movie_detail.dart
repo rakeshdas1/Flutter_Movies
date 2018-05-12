@@ -34,12 +34,19 @@ class _MovieDetailState extends State<MovieDetail> {
 
   @override
   Widget build(BuildContext context) {
-    var hero =
-        new Hero(tag: movie.id, child: new Image.network(movie.posterArtUrl));
     return new Scaffold(
       body: new SingleChildScrollView(
         child: new Column(
-          children: <Widget>[new MovieHeader(movie)],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            MovieHeader(movie),
+            Text(
+              movie.title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0, decoration: EdgeInsets.only(left: 20.0))
+            ),
+          ],
         ),
       ),
     );
@@ -55,7 +62,6 @@ class MovieHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Stack(
       children: <Widget>[
-//            new Image.network(movie.posterArtUrl),
         new Hero(tag: movie.id, child: new Image.network(movie.posterArtUrl))
       ],
     );
