@@ -67,7 +67,6 @@ class MovieWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cardTile = new MovieCell(
-      movie: movie,
       title: movie.title,
       photoUrl: movie.posterArtUrl,
     );
