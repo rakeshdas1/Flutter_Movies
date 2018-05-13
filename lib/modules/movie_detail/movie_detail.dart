@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/models/movie.dart';
 import 'package:flutter_app_first/widgets/movieHeader.dart';
+import 'package:flutter_app_first/widgets/ratingInfo.dart';
 
 class MovieDetailPage extends StatelessWidget {
   int movieId;
@@ -44,18 +45,17 @@ class _MovieDetailState extends State<MovieDetail> {
           children: <Widget>[
             MovieHeader(movie),
             Padding(
-              padding: EdgeInsets.only(left: 25.0),
+              padding: const EdgeInsets.only(left: 25.0),
               child: Text(movie.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 28.0,
                   )),
             ),
+            RatingInfo(movie),
           ],
         ),
       ),
     );
   }
 }
-
-
