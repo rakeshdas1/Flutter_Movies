@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/models/movie.dart';
-import 'package:flutter_app_first/widgets/movieHeader.dart';
+import 'package:flutter_app_first/models/movieDetail.dart';
+import 'package:flutter_app_first/modules/movie_detail/movie_detail_presenter.dart';
 import 'package:flutter_app_first/widgets/ratingInfo.dart';
 
 class MovieDetailPage extends StatelessWidget {
@@ -12,52 +13,56 @@ class MovieDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-//      appBar: new AppBar(
-//        title: new Text(movie.title)
-//      ),
-      body: new MovieDetail(movie),
+      body: new MovieDetailView(movie),
     );
   }
 }
 
-class MovieDetail extends StatefulWidget {
+class MovieDetailView extends StatefulWidget {
   Movie movie;
 
-  MovieDetail(this.movie, {Key key}) : super(key: key);
+  MovieDetailView(this.movie, {Key key}) : super(key: key);
 
   @override
   State createState() => new _MovieDetailState(movie);
 }
 
-class _MovieDetailState extends State<MovieDetail> {
+class _MovieDetailState extends State<MovieDetailView>
+    implements MovieDetailContract {
   Movie movie;
+  MovieDetail _movieDetail;
+  MovieDetailPresenter _presenter;
 
-  _MovieDetailState(this.movie);
+  bool _isLoading;
+
+  _MovieDetailState(this.movie) {
+    _presenter = new MovieDetailPresenter(this);
+  }
+  @override
+  void initState() {
+    super.initState();
+    _isLoading = true;
+    _presenter.loadMovieDetails(movie.id);
+  }
+
+  @override
+  void onLoadDetailsComplete(MovieDetail movie) {
+    setState(() {
+      _movieDetail = movie;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void onLoadDetailsError() {
+    // TODO: implement onLoadDetailsError
+  }
+
   final double _appBarHeight = 256.0;
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      // body: new SingleChildScrollView(
-      //   child: new Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     mainAxisSize: MainAxisSize.max,
-      //     mainAxisAlignment: MainAxisAlignment.end,
-      //     children: <Widget>[
-      //       MovieHeader(movie),
-      //       Padding(
-      //         padding: const EdgeInsets.only(left: 25.0),
-      //         child: Text(movie.title,
-      //             style: TextStyle(
-      //               fontWeight: FontWeight.bold,
-      //               fontSize: 28.0,
-      //             )),
-      //       ),
-      //       RatingInfo(movie),
-      //     ],
-      //   ),
-      // ),
-
       body: new CustomScrollView(
         slivers: <Widget>[
           new SliverAppBar(
@@ -81,12 +86,23 @@ class _MovieDetailState extends State<MovieDetail> {
           ),
           new SliverList(
             delegate: new SliverChildListDelegate(<Widget>[
-              
-
+              RatingInfo(movie),
+              _buildMovieDetails(_movieDetail)
             ]),
           )
         ],
       ),
     );
+  }
+
+  Widget _buildMovieDetails (MovieDetail movie) {
+    if (_isLoading) {
+      return new Center(
+        child: new CircularProgressIndicator(),
+      );
+    }
+    else {
+      return new Text(movie.overview);
+    }
   }
 }

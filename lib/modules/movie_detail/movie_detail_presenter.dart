@@ -15,10 +15,10 @@ class MovieDetailPresenter {
     _repo = new Injector().movieDetailRepo;
   }
 
-  void loadMovieDetails() {
+  void loadMovieDetails(int movieId) {
     assert(_view != null);
 
-    _repo.fetchMovieDetails(45465416)
+    _repo.fetchMovieDetails(movieId)
       .then((movieDetails) => _view.onLoadDetailsComplete(movieDetails))
       .catchError((onError) {
         print(onError);

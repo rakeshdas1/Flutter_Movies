@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/models/movie.dart';
-import 'package:flutter_app_first/modules/movie_detail/movie_detail.dart';
+import 'package:flutter_app_first/modules/movie_detail/movie_detail_view.dart';
 import 'package:flutter_app_first/modules/movie_list/movies_presenter.dart';
-import 'package:meta/meta.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 
@@ -13,20 +12,20 @@ class MoviesListPage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Movies"),
       ),
-      body: new MovieList(),
+      body: new MovieListView(),
     );
   }
 
 }
 
-class MovieList extends StatefulWidget {
-  MovieList({Key key}) : super(key: key);
+class MovieListView extends StatefulWidget {
+  MovieListView({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _MovieListState();
 }
 
-class _MovieListState extends State<MovieList> implements MovieListViewContract {
+class _MovieListState extends State<MovieListView> implements MovieListViewContract {
   MovieListPresenter _presenter;
 
   List<Movie> _movies;
