@@ -65,7 +65,7 @@ class _MovieDetailState extends State<MovieDetailView>
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-           SliverAppBar(
+          SliverAppBar(
             expandedHeight: _appBarHeight,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
@@ -73,7 +73,7 @@ class _MovieDetailState extends State<MovieDetailView>
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                   Hero(
+                  Hero(
                       tag: movie.id,
                       child: Image.network(
                         movie.posterArtUrl,
@@ -84,10 +84,10 @@ class _MovieDetailState extends State<MovieDetailView>
               ),
             ),
           ),
-         SliverList(
+          SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               RatingInfo(movie),
-              _buildMovieDetails(_movieDetail)
+              _buildMovieDetails(_movieDetail),
             ]),
           )
         ],
@@ -95,17 +95,26 @@ class _MovieDetailState extends State<MovieDetailView>
     );
   }
 
-  Widget _buildMovieDetails (MovieDetail movie) {
+  Widget _buildMovieDetails(MovieDetail movie) {
     if (_isLoading) {
       return Center(
         child: CircularProgressIndicator(),
       );
-    }
-    else {
+    } else {
       return Container(
-        padding: EdgeInsets.all(10.0),
-        child: Text(movie.overview),
-      );
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(movie.tagline,
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(movie.overview),
+                )
+              ]));
     }
   }
 }
