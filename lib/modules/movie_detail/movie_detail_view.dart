@@ -88,6 +88,7 @@ class _MovieDetailState extends State<MovieDetailView>
             delegate: SliverChildListDelegate(<Widget>[
               RatingInfo(movie),
               _buildMovieDetails(_movieDetail),
+              _buildMovieGenreChips(_movieDetail),
             ]),
           )
         ],
@@ -115,6 +116,21 @@ class _MovieDetailState extends State<MovieDetailView>
                   child: Text(movie.overview),
                 )
               ]));
+    }
+  }
+
+  Widget _buildMovieGenreChips(MovieDetail movieDetail) {
+    if (_isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } 
+    else {
+      // print(movieDetail.genres[2].genre);
+      for (var i in movieDetail.genres) {
+        print(i);
+        return Text(i.genre);
+      }
     }
   }
 }
