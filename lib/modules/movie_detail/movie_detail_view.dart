@@ -88,7 +88,6 @@ class _MovieDetailState extends State<MovieDetailView>
             delegate: SliverChildListDelegate(<Widget>[
               RatingInfo(movie),
               _buildMovieDetails(_movieDetail),
-              _buildMovieGenreChips(_movieDetail),
             ]),
           )
         ],
@@ -114,7 +113,8 @@ class _MovieDetailState extends State<MovieDetailView>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(movie.overview),
-                )
+                ),
+                _buildMovieGenreChips(movie)
               ]));
     }
   }
@@ -124,13 +124,25 @@ class _MovieDetailState extends State<MovieDetailView>
       return Center(
         child: CircularProgressIndicator(),
       );
-    } 
-    else {
-      // print(movieDetail.genres[2].genre);
-      for (var i in movieDetail.genres) {
-        print(i);
-        return Text(i.genre);
+    } else {
+      print(movieDetail.genres.length);
+      List<Widget> chips = List<Widget>();
+      for (var i = 0; i < movieDetail.genres.length; i++) {
+        chips.add(Chip(
+          avatar: Icon(
+            Icons.movie,
+            color: Colors.red,
+          ),
+          label: Text(movieDetail.genres[i].genre),
+          padding: EdgeInsets.all(12.0),
+        ));
       }
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: chips,
+        ),
+      );
     }
   }
 }
