@@ -4,7 +4,7 @@ class MovieDetail {
   final String title;
   final double rating;
   final String posterArtUrl;
-  final backgroundArtUrl;
+  final String backgroundArtUrl;
   final List<Genre> genres;
   final String overview;
   final String tagline;

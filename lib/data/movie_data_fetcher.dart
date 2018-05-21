@@ -6,28 +6,27 @@ import 'dart:convert';
 import 'package:flutter_app_first/models/movie.dart';
 
 class MovieDataFetcher implements MovieRepo {
-  static const _movieDataUrl = "https://api.themoviedb.org/3/movie/now_playing?api_key=";
+  static const _movieDataUrl =
+      "https://api.themoviedb.org/3/movie/now_playing?api_key=";
   final JsonDecoder _decoder = new JsonDecoder();
 
   @override
   Future<List<Movie>> fetchTopRated() {
-    return http.get(_movieDataUrl + Constants.TMDB_API_KEY)
+    return http
+        .get(_movieDataUrl + Constants.TMDB_API_KEY)
         .then((http.Response response) {
-      final String jsonBody = response.body;
-      final statusCode = response.statusCode;
+          final String jsonBody = response.body;
+          final statusCode = response.statusCode;
 
-      if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
-        throw new FetchDataException(
-            "Error while fetching movies [StatusCode: $statusCode, Error: $response]");
-      }
+          if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
+            throw new FetchDataException(
+                "Error while fetching movies [StatusCode: $statusCode, Error: $response]");
+          }
 
-      final movieContainer = _decoder.convert(jsonBody);
+          final movieContainer = _decoder.convert(jsonBody);
 
-      final List movieItems = movieContainer['results'];
-      return movieItems.map((movie) => new Movie.fromJson(movie)).toList();
+          final List movieItems = movieContainer['results'];
+          return movieItems.map((movie) => new Movie.fromJson(movie)).toList();
     });
   }
-
-
-
 }
