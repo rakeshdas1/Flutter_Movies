@@ -6,11 +6,6 @@ class MockMovieRepo implements MovieRepo {
   Future<List<Movie>> fetchTopRated() {
     return new Future.value(mockMovies);
   }
-
-  @override
-  Future< Movie> fetchMovieDetails(int movieId) {
-    // TODO: implement fetchMovieDetails
-  }
 }
 
 const mockMovies = const <Movie>[

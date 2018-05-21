@@ -18,7 +18,6 @@ class Movie {
 
 abstract class MovieRepo {
   Future<List<Movie>> fetchTopRated();
-  Future<Movie> fetchMovieDetails(int movieId);
 }
 
 class FetchDataException implements Exception {
