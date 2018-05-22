@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_first/models/movie.dart';
 import 'package:flutter_app_first/models/movieDetail.dart';
+import 'package:flutter_app_first/models/movieRecommendations.dart';
 import 'package:flutter_app_first/modules/movie_detail/movie_detail_presenter.dart';
 import 'package:flutter_app_first/widgets/ratingInfo.dart';
 
 class MovieDetailPage extends StatelessWidget {
-  int movieId;
-  Movie movie;
+  final int movieId;
+  final Movie movie;
 
   MovieDetailPage(this.movie);
 
@@ -31,6 +32,7 @@ class _MovieDetailState extends State<MovieDetailView>
     implements MovieDetailContract {
   Movie movie;
   MovieDetail _movieDetail;
+  List<MovieRecommendations> _recommendations;
   MovieDetailPresenter _presenter;
 
   bool _isLoading;
@@ -43,6 +45,7 @@ class _MovieDetailState extends State<MovieDetailView>
     super.initState();
     _isLoading = true;
     _presenter.loadMovieDetails(movie.id);
+    _presenter.loadMovieRecommendations(movie.id);
   }
 
   @override
@@ -56,6 +59,20 @@ class _MovieDetailState extends State<MovieDetailView>
   @override
   void onLoadDetailsError() {
     // TODO: implement onLoadDetailsError
+  }
+
+  @override
+  void onLoadRecommedationsComplete(
+      List<MovieRecommendations> recommendations) {
+        print(recommendations.length);
+    setState(() {
+      _recommendations = recommendations;
+    });
+  }
+
+  @override
+  void onLoadRecommendationsError() {
+    print("recommendations error");
   }
 
   final double _appBarHeight = 256.0;
@@ -95,7 +112,7 @@ class _MovieDetailState extends State<MovieDetailView>
     );
   }
 
-  Widget _buildMovieDetails(MovieDetail movie) {
+  Widget _buildMovieDetails(MovieDetail movieDetail) {
     if (_isLoading) {
       return Center(
         child: CircularProgressIndicator(),
@@ -106,15 +123,17 @@ class _MovieDetailState extends State<MovieDetailView>
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(movie.tagline,
+                Text(movieDetail.tagline,
                     style: TextStyle(
                       color: Theme.of(context).accentColor,
+                      fontSize: 25.0
                     )),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(movie.overview),
+                  child: Text(movieDetail.overview),
                 ),
-                _buildMovieGenreChips(movie)
+                _buildMovieGenreChips(movieDetail),
+                _buildMovieRecommendations(_recommendations),
               ]));
     }
   }
@@ -125,7 +144,6 @@ class _MovieDetailState extends State<MovieDetailView>
         child: CircularProgressIndicator(),
       );
     } else {
-      print(movieDetail.genres.length);
       List<Widget> chips = List<Widget>();
       for (var i = 0; i < movieDetail.genres.length; i++) {
         chips.add(Chip(
@@ -142,6 +160,20 @@ class _MovieDetailState extends State<MovieDetailView>
         child: Row(
           children: chips,
         ),
+      );
+    }
+  }
+
+  Widget _buildMovieRecommendations(
+      List<MovieRecommendations> recommendations) {
+    if (_isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return Row(
+        // children: recommendations.map((f) => Text(f.recommendations[0].title)).toList(),
+        children: <Widget>[Text("ME")],
       );
     }
   }
