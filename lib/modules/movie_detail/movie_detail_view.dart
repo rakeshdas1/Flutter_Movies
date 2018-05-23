@@ -4,6 +4,7 @@ import 'package:flutter_app_first/models/movieDetail.dart';
 import 'package:flutter_app_first/models/movieRecommendations.dart';
 import 'package:flutter_app_first/modules/movie_detail/movie_detail_presenter.dart';
 import 'package:flutter_app_first/widgets/ratingInfo.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MovieDetailPage extends StatelessWidget {
   final int movieId;
@@ -32,7 +33,7 @@ class _MovieDetailState extends State<MovieDetailView>
     implements MovieDetailContract {
   Movie movie;
   MovieDetail _movieDetail;
-  List<MovieRecommendations> _recommendations;
+  List<RecommendedMovie> _recommendedMovies;
   MovieDetailPresenter _presenter;
 
   bool _isLoading;
@@ -58,21 +59,21 @@ class _MovieDetailState extends State<MovieDetailView>
 
   @override
   void onLoadDetailsError() {
-    // TODO: implement onLoadDetailsError
+    print("Error loading movie details!");
   }
 
   @override
-  void onLoadRecommedationsComplete(
-      List<MovieRecommendations> recommendations) {
-        print(recommendations.length);
+  void onLoadMovieRecommendationsComplete(
+      List<RecommendedMovie> recommendedMovies) {
     setState(() {
-      _recommendations = recommendations;
+      _recommendedMovies = recommendedMovies;
+      _isLoading = false;
     });
   }
 
   @override
-  void onLoadRecommendationsError() {
-    print("recommendations error");
+  void onLoadMovieRecommendationsError() {
+    print("Error loading recommended movies!");
   }
 
   final double _appBarHeight = 256.0;
@@ -125,15 +126,20 @@ class _MovieDetailState extends State<MovieDetailView>
               children: <Widget>[
                 Text(movieDetail.tagline,
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontSize: 25.0
-                    )),
+                        color: Theme.of(context).accentColor, fontSize: 25.0)),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(movieDetail.overview),
                 ),
                 _buildMovieGenreChips(movieDetail),
-                _buildMovieRecommendations(_recommendations),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Text(
+                    "Other movies you might like:",
+                    style: TextStyle(fontSize: 32.0),
+                  ),
+                ),
+                _buildRecommendedMoviesList(_recommendedMovies, context)
               ]));
     }
   }
@@ -164,17 +170,50 @@ class _MovieDetailState extends State<MovieDetailView>
     }
   }
 
-  Widget _buildMovieRecommendations(
-      List<MovieRecommendations> recommendations) {
+  Widget _buildRecommendedMoviesList(
+      List<RecommendedMovie> recommendedMovies, BuildContext context) {
     if (_isLoading) {
       return Center(
         child: CircularProgressIndicator(),
       );
     } else {
-      return Row(
-        // children: recommendations.map((f) => Text(f.recommendations[0].title)).toList(),
-        children: <Widget>[Text("ME")],
+      List<Widget> recommendedMoviesCards = List<Widget>();
+
+      for (var i = 0; i < recommendedMovies.length; i++) {
+        recommendedMoviesCards.add(GestureDetector(
+            child: Card(
+          child: Column(
+            children: <Widget>[
+              Hero(
+                tag: recommendedMovies[i].id,
+                child: new FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: recommendedMovies[i].posterArtUrl,
+                  fit: BoxFit.contain,
+                  imageScale: 3.0,
+                ),
+              ),
+              Text(recommendedMovies[i].title)
+            ],
+          ),
+          elevation: 0.0,
+        )));
+      }
+
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: recommendedMoviesCards,
+        ),
       );
     }
+  }
+
+  void _showMovieDetailsView(BuildContext context, Movie movie) {
+    Navigator.push(
+        context,
+        new MaterialPageRoute<Null>(
+            settings: const RouteSettings(name: '/movieDetails'),
+            builder: (BuildContext context) => new MovieDetailPage(movie)));
   }
 }

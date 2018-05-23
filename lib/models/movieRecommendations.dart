@@ -17,16 +17,24 @@ class RecommendedMovie {
   final int id;
   final String posterArtUrl;
 
-  const RecommendedMovie ({this.title, this.id, this.posterArtUrl});
-  
-  RecommendedMovie.fromJson(Map jsonMap) 
+  const RecommendedMovie({this.title, this.id, this.posterArtUrl});
+
+  RecommendedMovie.fromJson(Map jsonMap)
       : title = jsonMap['title'],
         id = jsonMap['id'],
-        posterArtUrl = "http://image.tmdb.org/t/p/w342" + jsonMap['poster_path'];
+        posterArtUrl =
+            "http://image.tmdb.org/t/p/w342" + jsonMap['poster_path'];
+  @override 
+  String toString() {
+      return """\n
+        id:$id,
+        title:$title,
+        posterArtUrl:$posterArtUrl\n""";      
+    }
 }
 
 abstract class MovieRecommendationsRepo {
-  Future<List<MovieRecommendations>> fetchMovieRecommendations(int movieId);
+  Future<List<RecommendedMovie>> fetchMovieRecommendations(int movieId);
 }
 
 class FetchDataException implements Exception {

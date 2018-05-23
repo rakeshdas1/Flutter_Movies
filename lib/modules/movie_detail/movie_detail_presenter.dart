@@ -7,9 +7,10 @@ abstract class MovieDetailContract {
 
   void onLoadDetailsError();
 
-  void onLoadRecommedationsComplete(List<MovieRecommendations> recommendations);
+  void onLoadMovieRecommendationsComplete(
+      List<RecommendedMovie> recommendedMovies);
 
-  void onLoadRecommendationsError();
+  void onLoadMovieRecommendationsError();
 }
 
 class MovieDetailPresenter {
@@ -24,10 +25,9 @@ class MovieDetailPresenter {
 
   void loadMovieDetails(int movieId) {
     assert(_view != null);
-    _detailsRepo
-        .fetchMovieDetails(movieId)
-        .then((movieDetails) => _view.onLoadDetailsComplete(movieDetails))
-        .catchError((onError) {
+    _detailsRepo.fetchMovieDetails(movieId).then((movieDetails) {
+      _view.onLoadDetailsComplete(movieDetails);
+    }).catchError((onError) {
       print(onError);
       _view.onLoadDetailsError();
     });
@@ -37,13 +37,11 @@ class MovieDetailPresenter {
     assert(_view != null);
     _recommendationsRepo
         .fetchMovieRecommendations(movieId)
-        .then((movieRecommendations) {
-          print(movieRecommendations.toString());
-        })
-            // _view.onLoadRecommedationsComplete(movieRecommendations))
+        .then((movieRecommendations) =>
+            _view.onLoadMovieRecommendationsComplete(movieRecommendations))
         .catchError((onError) {
-      print("ERR:" + onError.toString());
-      _view.onLoadRecommendationsError();
-    });
+          print(onError);
+          _view.onLoadMovieRecommendationsError();
+        });
   }
 }

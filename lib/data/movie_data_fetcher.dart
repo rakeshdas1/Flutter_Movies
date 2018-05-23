@@ -26,7 +26,7 @@ class MovieDataFetcher implements MovieRepo {
           final movieContainer = _decoder.convert(jsonBody);
 
           final List movieItems = movieContainer['results'];
-          return movieItems.map((movie) => new Movie.fromJson(movie)).toList();
+          return movieItems.map((movie) => Movie.fromJson(movie)).toList();
     });
   }
 }

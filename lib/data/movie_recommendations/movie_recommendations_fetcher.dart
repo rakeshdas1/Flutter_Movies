@@ -10,7 +10,7 @@ class MovieRecommendationsFetcher implements MovieRecommendationsRepo {
   static const _movieRecommendationEndpoint = "/recommendations";
   final JsonDecoder _decoder = new JsonDecoder();
   @override
-  Future<List<MovieRecommendations>> fetchMovieRecommendations(int movieId) {
+  Future<List<RecommendedMovie>> fetchMovieRecommendations(int movieId) {
     var _recommendationsUrl = _apiBase +
         movieId.toString() +
         _movieRecommendationEndpoint +
@@ -29,10 +29,7 @@ class MovieRecommendationsFetcher implements MovieRecommendationsRepo {
 
       final List recommendationItems = recommendationsContainer['results'];
 
-      return recommendationItems.map((recommendation) {
-        print(recommendation);
-        MovieRecommendations.fromJson(recommendation);
-      }).toList();
+      return recommendationItems.map((f) => RecommendedMovie.fromJson(f)).toList();
     });
   }
 }
