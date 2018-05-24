@@ -53,7 +53,7 @@ class _MovieDetailState extends State<MovieDetailView>
   void onLoadDetailsComplete(MovieDetail movie) {
     setState(() {
       _movieDetail = movie;
-      _isLoading = false;
+      // _isLoading = false;
     });
   }
 
@@ -114,7 +114,7 @@ class _MovieDetailState extends State<MovieDetailView>
   }
 
   Widget _buildMovieDetails(MovieDetail movieDetail) {
-    if (_isLoading) {
+    if (_isLoading || movieDetail == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -181,6 +181,7 @@ class _MovieDetailState extends State<MovieDetailView>
 
       for (var i = 0; i < recommendedMovies.length; i++) {
         recommendedMoviesCards.add(GestureDetector(
+          onTap:  () => _showMovieDetailsView(context, recommendedMovies[i]),
             child: Card(
           child: Column(
             children: <Widget>[
