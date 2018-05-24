@@ -111,7 +111,7 @@ class _MovieListItem extends StatelessWidget {
           children: <Widget>[
             new Hero(
                 tag: _movie.id,
-                child: new FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: _movie.posterArtUrl, fit: BoxFit.contain,)),
+                child: new FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: _movie.backgroundArtUrl, fit: BoxFit.contain,)),
             new Text(_movie.title, style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0),)
           ],
         ),

@@ -8,39 +8,19 @@ class MovieRecommendations {
 
   MovieRecommendations.fromJson(Map jsonMap)
       : recommendations = (jsonMap as List).map((i) {
-          RecommendedMovie.fromJson(i);
+          Movie.fromJson(i);
         }).toList();
 }
 
-class RecommendedMovie {
-  final String title;
-  final int id;
-  final String posterArtUrl;
-
-  const RecommendedMovie({this.title, this.id, this.posterArtUrl});
-
-  RecommendedMovie.fromJson(Map jsonMap)
-      : title = jsonMap['title'],
-        id = jsonMap['id'],
-        posterArtUrl =
-            "http://image.tmdb.org/t/p/w342" + jsonMap['poster_path'];
-  @override 
-  String toString() {
-      return """\n
-        id:$id,
-        title:$title,
-        posterArtUrl:$posterArtUrl\n""";      
-    }
-}
 
 abstract class MovieRecommendationsRepo {
-  Future<List<RecommendedMovie>> fetchMovieRecommendations(int movieId);
+  Future<List<Movie>> fetchMovieRecommendations(int movieId);
 }
 
-class FetchDataException implements Exception {
+class FetchDataExceptionRec implements Exception {
   String _message;
 
-  FetchDataException(this._message);
+  FetchDataExceptionRec(this._message);
 
   String toString() {
     return "Exception: $_message";

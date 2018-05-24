@@ -33,7 +33,7 @@ class _MovieDetailState extends State<MovieDetailView>
     implements MovieDetailContract {
   Movie movie;
   MovieDetail _movieDetail;
-  List<RecommendedMovie> _recommendedMovies;
+  List<Movie> _recommendedMovies;
   MovieDetailPresenter _presenter;
 
   bool _isLoading;
@@ -64,7 +64,7 @@ class _MovieDetailState extends State<MovieDetailView>
 
   @override
   void onLoadMovieRecommendationsComplete(
-      List<RecommendedMovie> recommendedMovies) {
+      List<Movie> recommendedMovies) {
     setState(() {
       _recommendedMovies = recommendedMovies;
       _isLoading = false;
@@ -171,7 +171,7 @@ class _MovieDetailState extends State<MovieDetailView>
   }
 
   Widget _buildRecommendedMoviesList(
-      List<RecommendedMovie> recommendedMovies, BuildContext context) {
+      List<Movie> recommendedMovies, BuildContext context) {
     if (_isLoading) {
       return Center(
         child: CircularProgressIndicator(),

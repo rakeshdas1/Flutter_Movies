@@ -1,4 +1,5 @@
 import 'package:flutter_app_first/injection/dependency_injection.dart';
+import 'package:flutter_app_first/models/movie.dart';
 import 'package:flutter_app_first/models/movieDetail.dart';
 import 'package:flutter_app_first/models/movieRecommendations.dart';
 
@@ -8,7 +9,7 @@ abstract class MovieDetailContract {
   void onLoadDetailsError();
 
   void onLoadMovieRecommendationsComplete(
-      List<RecommendedMovie> recommendedMovies);
+      List<Movie> recommendedMovies);
 
   void onLoadMovieRecommendationsError();
 }

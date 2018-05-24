@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_app_first/data/constants.dart';
+import 'package:flutter_app_first/models/movie.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_app_first/models/movieRecommendations.dart';
@@ -10,7 +11,7 @@ class MovieRecommendationsFetcher implements MovieRecommendationsRepo {
   static const _movieRecommendationEndpoint = "/recommendations";
   final JsonDecoder _decoder = new JsonDecoder();
   @override
-  Future<List<RecommendedMovie>> fetchMovieRecommendations(int movieId) {
+  Future<List<Movie>> fetchMovieRecommendations(int movieId) {
     var _recommendationsUrl = _apiBase +
         movieId.toString() +
         _movieRecommendationEndpoint +
@@ -21,7 +22,7 @@ class MovieRecommendationsFetcher implements MovieRecommendationsRepo {
       final statusCode = response.statusCode;
 
       if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
-        throw new FetchDataException(
+        throw new FetchDataExceptionRec(
             "Error while fetching movie recommendations [StatusCode: $statusCode, Error: $response]");
       }
 
@@ -29,7 +30,7 @@ class MovieRecommendationsFetcher implements MovieRecommendationsRepo {
 
       final List recommendationItems = recommendationsContainer['results'];
 
-      return recommendationItems.map((f) => RecommendedMovie.fromJson(f)).toList();
+      return recommendationItems.map((f) => Movie.fromJson(f)).toList();
     });
   }
 }
